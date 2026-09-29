@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1a30">
+  <meta name="description"
+        content="TOPIK II Level 3 အပြည့်စုံဆုံး သဒ္ဒါ ၅၀၊ ဝေါဟာရ ၁၀၀ မြန်မာဘာသာပြန်၊ flashcard နှင့် quiz။">
+  <title>TOPIK II Level 3 | အပြည့်စုံလေ့လာရေး</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Sans+Myanmar:wght@400;600;700&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./data.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">အဓိကအကြောင်းအရာသို့ သွားရန်</a>
+
+  <header class="hero">
+    <div class="container">
+      <p class="eyebrow">한국어 · မြန်မာ</p>
+      <h1>TOPIK II · Level 3</h1>
+      <p>သဒ္ဒါ ၅၀ · ဝေါဟာရ ၁၀၀ · Flashcard · Quiz</p>
+      <div class="hero-stats">
+        <span id="grammar-count">သဒ္ဒါ</span>
+        <span id="vocab-count">ဝေါဟာရ</span>
+        <span id="learned-count">မှတ်မိပြီး</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <div class="notice">
+      ဤစာရင်းသည် TOPIK II Level 3 အတွက် ဦးစားပေးလေ့ကျင့်ရန် ရွေးထားသော
+      အပြည့်စုံဆုံး starter collection ဖြစ်သည်။ တရားဝင် frequency ranking မဟုတ်ပါ။
+      Quiz ရလဒ်ကို စာမေးပွဲရမှတ်အဖြစ် မယူဆပါနှင့်။
+    </div>
+
+    <nav class="tabs" aria-label="လေ့လာရေးကဏ္ဍများ">
+      <button class="tab active" data-tab="grammar" aria-current="page">သဒ္ဒါ</button>
+      <button class="tab" data-tab="vocab">ဝေါဟာရ</button>
+      <button class="tab" data-tab="cards">Flashcard</button>
+      <button class="tab" data-tab="quiz">Quiz</button>
+      <button class="tab" data-tab="guide">လေ့လာနည်း</button>
+    </nav>
+
+    <section id="grammar" class="panel">
+      <div class="section-head">
+        <div>
+          <h2>Intermediate သဒ္ဒါ ၅၀ ချက်</h2>
+          <p class="muted">ပုံစံ၊ အဓိပ္ပါယ်၊ အသုံးပြုပုံ၊ နမူနာဝါကျ</p>
+        </div>
+        <button class="secondary print-button" type="button">PDF / Print</button>
+      </div>
+
+      <div class="filters">
+        <label>
+          သဒ္ဒါရှာရန်
+          <input id="grammar-search" type="search"
+                 placeholder="ဥပမာ -느라고၊ အကြောင်းရင်း">
+        </label>
+        <label>
+          အမျိုးအစား
+          <select id="grammar-category">
+            <option value="">အားလုံး</option>
+          </select>
+        </label>
+      </div>
+
+      <p id="grammar-status" class="status" aria-live="polite"></p>
+      <div id="grammar-list" class="grid"></div>
+    </section>
+
+    <section id="vocab" class="panel" hidden>
+      <div class="section-head">
+        <div>
+          <h2>ဝေါဟာရဇယား ၁၀၀</h2>
+          <p class="muted">★ ဖြင့် bookmark၊ ✓ ဖြင့် မှတ်မိပြီးဟု သတ်မှတ်ပါ</p>
+        </div>
+        <div class="actions">
+          <button id="csv-button" class="secondary" type="button">CSV ထုတ်ရန်</button>
+          <button class="secondary print-button" type="button">PDF / Print</button>
+        </div>
+      </div>
+
+      <div class="filters">
+        <label>
+          ရှာရန်
+          <input id="vocab-search" type="search"
+                 placeholder="ကိုရီးယား / မြန်မာ / နမူနာဝါကျ">
+        </label>
+        <label>
+          ကဏ္ဍ
+          <select id="vocab-category">
+            <option value="">အားလုံး</option>
+          </select>
+        </label>
+        <label>
+          မှတ်သားမှု
+          <select id="vocab-filter">
+            <option value="all">အားလုံး</option>
+            <option value="starred">★ ပေးထားသော</option>
+            <option value="unlearned">မမှတ်မိသေးသော</option>
+          </select>
+        </label>
+      </div>
+
+      <p id="vocab-status" class="status" aria-live="polite"></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ကဏ္ဍ</th>
+              <th>한국어</th>
+              <th>မြန်မာ / ရှင်းလင်းချက်</th>
+              <th>နမူနာ / ဘာသာပြန်</th>
+              <th class="screen-only">မှတ်သားမှု</th>
+            </tr>
+          </thead>
+          <tbody id="vocab-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="cards" class="panel" hidden>
+      <h2>Flashcard</h2>
+      <p class="muted">ကိုရီးယားစကားလုံးကို ကြည့်ပြီး အဓိပ္ပါယ်ကို ကိုယ်တိုင်ဖြေကြည့်ပါ။</p>
+      <div class="filters">
+        <label>
+          ကဏ္ဍ
+          <select id="card-category">
+            <option value="">အားလုံး</option>
+          </select>
+        </label>
+        <label>
+          ရွေးချယ်မှု
+          <select id="card-filter">
+            <option value="all">အားလုံး</option>
+            <option value="starred">★ ပေးထားသော</option>
+            <option value="unlearned">မမှတ်မိသေးသော</option>
+          </select>
+        </label>
+      </div>
+
+      <article class="flashcard" aria-live="polite">
+        <p id="card-position" class="muted"></p>
+        <h3 id="card-word" class="ko"></h3>
+        <div id="card-answer" hidden></div>
+      </article>
+
+      <div class="actions">
+        <button id="card-prev" class="secondary" type="button">← ရှေ့</button>
+        <button id="card-reveal" type="button">အဖြေပြရန်</button>
+        <button id="card-next" class="secondary" type="button">နောက် →</button>
+        <button id="card-learned" class="secondary" type="button">✓ မှတ်မိပြီ</button>
+      </div>
+    </section>
+
+    <section id="quiz" class="panel" hidden>
+      <h2>ဝေါဟာရ Quiz</h2>
+      <p>ကိုရီးယားစကားလုံးနှင့် ကိုက်ညီသော မြန်မာအဓိပ္ပါယ်ကို ရွေးပါ။</p>
+      <button id="quiz-start" type="button">မေးခွန်း ၁၅ ခု စတင်ရန်</button>
+      <div id="quiz-box" class="quiz-box" aria-live="polite"></div>
+    </section>
+
+    <section id="guide" class="panel" hidden>
+      <h2>လေ့လာနည်း</h2>
+      <ol>
+        <li>နေ့စဉ် သဒ္ဒါ ၃ ချက်နှင့် ဝေါဟာရ ၁၅ လုံး သင်ယူပါ။</li>
+        <li>ဝေါဟာရနမူနာဝါကျကို အဖြေမကြည့်ဘဲ ဘာသာပြန်ကြည့်ပါ။</li>
+        <li>Flashcard ဖြင့် ပြန်စစ်ပြီး ✓ ကို တကယ်မှတ်မိမှ နှိပ်ပါ။</li>
+        <li>Quiz ပြီးလျှင် မှားသည့်စကားလုံးများကို ★ ပေး၍ ပြန်လေ့လာပါ။</li>
+        <li>၁ ရက်၊ ၃ ရက်၊ ၇ ရက်အကြာ ပြန်လည်စစ်ဆေးပါ။</li>
+      </ol>
+
+      <h3>ရေးသားခြင်း နမူနာ</h3>
+      <p class="ko">
+        환경 보호는 중요하다. 예를 들어 쓰레기를 분리해서 버릴 수 있다.
+        또한 물을 절약해야 한다. 따라서 작은 습관부터 시작해야 한다.
+      </p>
+      <p>
+        ပတ်ဝန်းကျင်ကာကွယ်ရေးသည် အရေးကြီးသည်။ ဥပမာ အမှိုက်ကို
+        ခွဲ၍ပစ်နိုင်သည်။ ထို့အပြင် ရေကို ချွေတာရမည်။
+        ထို့ကြောင့် အလေ့အကျင့်အသေးစားမှ စတင်သင့်သည်။
+      </p>
+
+      <h3>ပုံစံအညွှန်း</h3>
+      <p>V = ကြိယာ၊ A = နာမဝိသေသန၊ N = နာမ်။</p>
+      <p>
+        TOPIK II စာမေးပွဲအချက်အလက်ကို
+        <a href="https://www.niied.go.kr/web/NIIED/contents/niiedEng/eng_topikOverview"
+           target="_blank" rel="noopener noreferrer">NIIED TOPIK Overview</a>
+        တွင် စစ်ဆေးနိုင်သည်။
+      </p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    ကိုယ်တိုင်ရေးသားထားသော လေ့ကျင့်ရေး content · တရားဝင် TOPIK site မဟုတ်ပါ။
+    မှတ်သားမှုကို ဤ browser ၏ local storage တွင်သာ သိမ်းသည်။
+  </footer>
+</body>
+</html>
