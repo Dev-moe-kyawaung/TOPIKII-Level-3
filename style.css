@@ -215,3 +215,26 @@ small { color: var(--muted); }
   .grid { display: block; }
   .grammar-card { margin-bottom: 7px; }
 }
+.writing-sample {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f9fbfd;
+}
+
+.writing-sample h4 {
+  margin: 15px 0 8px;
+  color: var(--accent-dark);
+  font-size: 1.1rem;
+}
+
+.writing-sample p {
+  margin: 5px 0;
+}
+
+.writing-sample .ko {
+  font-family: "Noto Sans KR", system-ui, sans-serif;
+  font-size: 1.05rem;
+}
+
