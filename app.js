@@ -338,3 +338,79 @@ $("#card-filter").addEventListener("change", () => {
   cardIndex = 0;
   cardIsRevealed = false;
   render
+  // app.js တွင် renderQuiz function အတွင်း
+function renderQuiz() {
+  const box = $("#quiz-box");
+  box.replaceChildren();
+
+  if (quizAt >= quizQuestions.length) {
+    box.append(
+      element("h3", `ရလဒ်: ${quizScore} / ${quizQuestions.length}`),
+      element("p", "မှားခဲ့သည့်စကားလုံးများကို ဝေါဟာရဇယားတွင် ★ ပေးပြီး ပြန်လေ့လာပါ။")
+    );
+    return;
+  }
+
+  quizAnswered = false;
+  const current = quizQuestions[quizAt];
+  const item = VOCAB[current];
+  const alternatives = shuffle(
+    VOCAB.map((_, i) => i).filter(i =>
+      i !== current && VOCAB[i].meaning !== item.meaning
+    )
+  ).slice(0, 3);
+  const choices = shuffle([current, ...alternatives]);
+
+  box.append(
+    element("p", `မေးခွန်း ${quizAt + 1} / ${quizQuestions.length}`),
+    element("h3", item.word, "ko")
+  );
+
+  const options = element("div", "", "quiz-options");
+  const feedback = element("p", "");
+  feedback.setAttribute("role", "status");
+
+  for (const choice of choices) {
+    const button = element("button", VOCAB[choice].meaning, "secondary");
+
+    button.addEventListener("click", () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+
+      if (choice === current) {
+        quizScore++;
+        feedback.textContent = `မှန်သည်။ ${item.example} — ${item.translation}`;
+      } else {
+        feedback.textContent =
+          `မမှန်ပါ။ အဖြေ: ${item.meaning}။ ` +
+          `${item.example} — ${item.translation}`;
+      }
+
+      for (const child of options.children) child.disabled = true;
+
+      const next = element(
+        "button",
+        quizAt === quizQuestions.length - 1
+          ? "ရလဒ်ကြည့်ရန်"
+          : "နောက်မေးခွန်း"
+      );
+      next.addEventListener("click", () => {
+        quizAt++;
+        renderQuiz();
+      });
+      box.append(next);
+    });
+
+    options.append(button);
+  }
+
+  box.append(options, feedback);
+}
+
+// quiz-start button event listener ကို 15 မေးခွန်းဖြစ်အောင် ပြောင်းပါ
+$("#quiz-start").addEventListener("click", () => {
+  quizQuestions = shuffle(VOCAB.map((_, index) => index)).slice(0, 15);
+  quizAt = 0;
+  quizScore = 0;
+  renderQuiz();
+});
